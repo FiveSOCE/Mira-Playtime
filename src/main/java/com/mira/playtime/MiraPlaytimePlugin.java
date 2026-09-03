@@ -24,6 +24,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public final class MiraPlaytimePlugin extends JavaPlugin implements Listener {
+    private static final String PREFIX = "&5&lMira &8>> &r";
     private PlaytimeService service;
     private final Map<UUID, Long> lastActivity = new ConcurrentHashMap<>();
     private long afkMillis;
@@ -74,23 +75,24 @@ public final class MiraPlaytimePlugin extends JavaPlugin implements Listener {
                 if (!(sender instanceof Player p)) return true;
                 target = p;
             } else {
-                if (!sender.hasPermission("miraplaytime.others")) { sender.sendMessage(c("&cYou do not have permission.")); return true; }
+                if (!sender.hasPermission("miraplaytime.others")) { msg(sender, "&cYou do not have permission."); return true; }
                 target = Bukkit.getOfflinePlayer(args[0]);
             }
-            sender.sendMessage(c("&6" + (target.getName() == null ? target.getUniqueId() : target.getName()) + " &7active playtime:"));
-            sender.sendMessage(c("&7Today: &f" + format(service.seconds(target.getUniqueId(), Scope.DAILY))));
-            sender.sendMessage(c("&7This week: &f" + format(service.seconds(target.getUniqueId(), Scope.WEEKLY))));
-            sender.sendMessage(c("&7All time: &f" + format(service.seconds(target.getUniqueId(), Scope.ALL))));
+            msg(sender, "&6" + (target.getName() == null ? target.getUniqueId() : target.getName()) + " &7active playtime:");
+            msg(sender, "&7Today: &f" + format(service.seconds(target.getUniqueId(), Scope.DAILY)));
+            msg(sender, "&7This week: &f" + format(service.seconds(target.getUniqueId(), Scope.WEEKLY)));
+            msg(sender, "&7All time: &f" + format(service.seconds(target.getUniqueId(), Scope.ALL)));
             return true;
         }
         Scope scope = args.length >= 1 ? Scope.parse(args[0]) : Scope.ALL;
-        sender.sendMessage(c("&6&lPlaytime Top &7(" + scope.name().toLowerCase(Locale.ROOT) + ")"));
+        msg(sender, "&6&lPlaytime Top &7(" + scope.name().toLowerCase(Locale.ROOT) + ")");
         List<PlaytimeEntry> top = service.top(scope, 10);
-        for (int i = 0; i < top.size(); i++) sender.sendMessage(c("&e#" + (i + 1) + " &f" + top.get(i).name() + " &8- &a" + format(top.get(i).seconds())));
-        if (top.isEmpty()) sender.sendMessage(c("&7No playtime recorded yet."));
+        for (int i = 0; i < top.size(); i++) msg(sender, "&e#" + (i + 1) + " &f" + top.get(i).name() + " &8- &a" + format(top.get(i).seconds()));
+        if (top.isEmpty()) msg(sender, "&7No playtime recorded yet.");
         return true;
     }
 
+    private void msg(CommandSender sender, String raw) { sender.sendMessage(c(getConfig().getString("messages.prefix", PREFIX) + raw)); }
     static String c(String s) { return ChatColor.translateAlternateColorCodes('&', s); }
     static String format(long seconds) {
         long d = seconds / 86400; seconds %= 86400;
