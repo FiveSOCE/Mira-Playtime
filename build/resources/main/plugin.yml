@@ -1,0 +1,16 @@
+name: MiraPlaytime
+version: 0.1.0
+main: com.mira.playtime.MiraPlaytimePlugin
+api-version: '1.21'
+author: FiveS
+softdepend: [PlaceholderAPI]
+commands:
+  playtime:
+    description: Show active playtime
+    usage: /playtime [player]
+  playtimetop:
+    description: Show playtime leaderboard
+    usage: /playtimetop [daily|weekly|all]
+permissions:
+  miraplaytime.others:
+    default: op
