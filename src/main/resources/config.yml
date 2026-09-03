@@ -1,0 +1,2 @@
+# Seconds without movement/interaction/commands before playtime pauses.
+afk-seconds: 300
