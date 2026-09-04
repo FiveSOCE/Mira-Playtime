@@ -1,5 +1,22 @@
-# Seconds without movement/interaction/commands before playtime pauses.
+# Seconds without movement/interaction/commands before active playtime pauses.
 afk-seconds: 300
+
+# IANA zone used for daily and ISO-week boundaries.
+timezone: "UTC"
+
+history:
+  retain-days: 90
+  retain-weeks: 52
+
+leaderboards:
+  enabled: true
+  sync-seconds: 60
+  daily-board: "playtime_daily"
+  weekly-board: "playtime_weekly"
+  all-time-board: "playtime_all"
+
+milestones:
+  hours: [1, 10, 100, 500, 1000]
 
 messages:
   prefix: '&5&lMira &8>> &r'
