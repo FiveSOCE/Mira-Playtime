@@ -3,14 +3,15 @@ version: ${version}
 main: com.mira.playtime.MiraPlaytimePlugin
 api-version: '1.21'
 author: FiveS
-softdepend: [PlaceholderAPI]
+depend: [MiraCore]
+softdepend: [PlaceholderAPI, MiraLeaderboards]
 commands:
   playtime:
     description: Show active playtime
     usage: /playtime [player]
   playtimetop:
     description: Show playtime leaderboard
-    usage: /playtimetop [daily|weekly|all]
+    usage: /playtimetop [daily|weekly|all] [page]
 permissions:
   miraplaytime.others:
     default: op
